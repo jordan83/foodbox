@@ -5,12 +5,13 @@ import (
 	"appengine"
 )
 
-// Repository wrapper implementation.
+//----------------------------------------------------------------------
+// Datastructures and private methods for default service implementation
+//----------------------------------------------------------------------
 
 type RepoWrapper struct {
 	imageStore context.ImageStore
 	repository *Repository
-	
 }
 
 type RecipeModel struct {
@@ -59,7 +60,9 @@ func transformToUrls(keys []string) []ImageUrl {
 	return imageUrls
 }
 
+//------------------------------
 // Recipe service implementation
+//------------------------------
 
 type Service interface {
 	
