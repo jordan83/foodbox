@@ -8,8 +8,9 @@ import (
 // Repository wrapper implementation.
 
 type RepoWrapper struct {
-	fileUploadUrlProvider context.FileUploadUrlProvider
+	imageStore context.ImageStore
 	repository *Repository
+	
 }
 
 type RecipeModel struct {
@@ -25,7 +26,7 @@ type ImageUrl string
 
 func newService(c appengine.Context) Service {
 	return &RepoWrapper {
-		context.NewFileUploadUrlProvider(c),
+		context.NewImageStore(c),
 		newRepositoryFromContext(c),
 	}
 }
@@ -36,7 +37,7 @@ func (service *RepoWrapper) newRecipeModel(key string, recipe Recipe) RecipeMode
 		Title: recipe.Title,
 		Author: recipe.Author,
 		Ingredients: recipe.Ingredients,
-		FileUploadUrl: service.fileUploadUrlProvider.CreateUploadUrl(addFileRoute(key)),
+		FileUploadUrl: service.imageStore.CreateUploadUrl(addFileRoute(key)),
 		ImageUrls: transformToUrls(recipe.ImageKeys),
 	}
 }
@@ -88,6 +89,9 @@ func (service *RepoWrapper) add(recipe *Recipe) error {
 }
 
 func (service *RepoWrapper) removeRecipe(recipeId string) {
+	imageKeys := service.repository.fetchRecipe(recipeId).Recipe.ImageKeys
+	service.imageStore.RemoveImages(imageKeys)
+	
 	service.repository.removeRecipe(recipeId)
 }
 

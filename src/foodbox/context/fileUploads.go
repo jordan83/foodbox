@@ -7,28 +7,11 @@ import (
 	"errors"
 )
 
-type FileUploadUrlProvider interface {
-	CreateUploadUrl(url string) string
-}
-
-type blobstoreFileUploadUrlProvider struct {
-	context appengine.Context
-}
-
-func NewFileUploadUrlProvider(context appengine.Context) FileUploadUrlProvider {
-	return &blobstoreFileUploadUrlProvider {
-		context,
-	}
-}
-
-func (urlProvider *blobstoreFileUploadUrlProvider) CreateUploadUrl(url string) string {
-	uploadUrl, _ := blobstore.UploadURL(urlProvider.context, url, nil)
-	return uploadUrl.String()
-}
-
 type ImageStore interface {
 	GetUploadedImageKey(r *http.Request, name string) (err error, key string)
 	WriteImage(w http.ResponseWriter, key string)
+	CreateUploadUrl(url string) string
+	RemoveImages(imageKeys []string)
 }
 
 type blobstoreImageStore struct {
@@ -65,4 +48,18 @@ func (imageStore *blobstoreImageStore) GetUploadedImageKey(r *http.Request, name
 
 func (imageStore *blobstoreImageStore) WriteImage(w http.ResponseWriter, key string) {
 	blobstore.Send(w, appengine.BlobKey(key))
+}
+
+func (imageStore *blobstoreImageStore) CreateUploadUrl(url string) string {
+	uploadUrl, _ := blobstore.UploadURL(imageStore.context, url, nil)
+	return uploadUrl.String()
+}
+
+func (imageStore *blobstoreImageStore) RemoveImages(imageKeys []string) {
+	keys := make([]appengine.BlobKey, len(imageKeys))
+	for i := 0; i < len(imageKeys); i++ {
+		keys[i] = appengine.BlobKey(imageKeys[i])
+	}
+	
+	blobstore.DeleteMulti(imageStore.context, keys)
 }
