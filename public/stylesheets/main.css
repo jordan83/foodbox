@@ -1,0 +1,264 @@
+ 
+body {
+	font-family: 'Josefin Sans', Verdana, Helvetica, sans-serif;
+	font-size: small;
+}
+
+html, body {
+	height:100%;
+	min-height:100%;
+	margin:0px;
+	position:relative;
+}
+
+h1 {
+	font-size: 2em;
+	font-weight:600;
+}
+
+h2 {
+	font-size: 1.5em;
+}
+
+#logo-foodbox {
+	font-size: 3.5em;
+	float:left;
+}
+
+#user {
+	list-style-type:none;
+	float:right;
+}
+
+#all-container {
+	min-height:100%;
+	background-color:#E6DCD8;
+	position:relative;
+}
+
+#header {
+	height:60px;
+	padding-left:20px;
+	padding-right:20px;
+	background-color:#685642;
+}
+
+#header a, #header li, #header #logo-foodbox {
+	color:white;
+}
+
+#content {
+	overflow:auto;
+	height:100%;
+	min-height:100%;
+	background-color:#E6DCD8;
+	padding-bottom:70px;
+}
+
+#nav {
+	float:left;
+	width:200px;
+	height:100%;
+}
+
+#main-separator {
+	position:absolute;
+	width:3px;
+	top:60px;
+	bottom:0px;
+	left:200px;
+	background-color:#685642;
+}
+
+#main {
+	padding-bottom:60px;
+	padding-left:210px;
+}
+
+/*#footer {
+	position: relative;
+	margin-top: -60px;
+	height: 60px;
+	background-color:#685642;
+	clear:both;
+}*/
+
+#signin-links {
+	text-align: center;
+	padding-top: 10px;
+}
+
+#splash {
+	padding-top: 10px;
+	width: 800px;
+	height: 600px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.foodie-quantity, .foodie-unit {
+	width:80px;
+	height:25px;
+	margin:5px;
+}
+
+.foodie-quantity-group {
+	float:right;
+	margin-right:10px;
+}
+
+.all-ingredients {
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+.add-more-button span {
+	width:15px;
+}
+
+.foodie-recipe-main {
+	margin-left:30px;
+}
+
+.foodie-recipe-right {
+	float:right;
+	margin-right:50px;
+}
+
+.foodie-recipe-buttons button {
+	float:left;
+}
+
+.foodie-recipe-items {
+	list-style-type:none;
+	padding-left:0px;
+}
+
+.foodie-ingredients h2, .foodie-recipe-method h2 {
+	font-size:1.2em;
+	font-weight:600;
+	
+}
+
+.foodie-recipe-main h1, .foodie-ingredients h2, .foodie-recipe-method h2 {
+	margin-right:572px;
+	-moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    padding:5px;
+    height:35px;
+    vertical-align:middle;
+    line-height:35px;
+    background-color:#685642;
+    padding-left:10px;
+    color:white;
+    font-weight:normal;
+}
+
+.foodie-file-drop {
+	border-style:dotted;
+	border-width:thin;
+	border-color:grey;
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+	margin:5px;
+	padding:5px;
+	height:490px;
+}
+
+.foodie-drop-label {
+	margin-top:25%;
+	display:inline-block;
+	vertical-align:middle;
+}
+
+.foodbox-slide-show {
+	text-align:center;
+}
+
+.foodbox-slide {
+	height:512px;
+	width:512px;
+	border-style:solid;
+	border-width:thin;
+	border-color:grey;
+}
+
+.foodie-file-drop-enter {
+	background-color: grey;
+}
+
+.foodie-file-attach {
+	background-color:#8995A6;
+	-moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    padding:3px;
+}
+
+.foodie-file-attach span {
+	margin-right:5px;
+	color:#685642;
+	width:100%;
+}
+
+.foodie-file-attach a {
+	color:#685642;
+	text-decoration:none;
+	float:right;
+	margin-right:5px;
+}
+
+img.foodie-ajax-busy {
+	position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -8px; /* -1 * image width / 2 */
+    margin-top: -8x;  /* -1 * image height / 2 */
+    display: block;  
+}
+    
+.foodie-float-list {
+	padding:10px;
+}
+
+.foodie-float-element {
+	background-color:#685642;;
+	border: 1px solid #685642;
+	height: 150px;
+	width: 150px;
+	padding:5px;
+	margin:5px;
+	top:100px;
+	float:left;
+	-moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.foodie-float-element a {
+	color:white;
+}
+
+.foodie-float-element a {
+	position: top left;
+	margin: 10px;
+}
+
+.foodie-float-icon img {
+	width: 130px;
+	height: 110px;
+	margin: 10px;
+}
+
+input.text {
+	margin-bottom:12px;
+	width:95%;
+	padding: .4em;
+}
+
+fieldset {
+	border-style:none;
+}

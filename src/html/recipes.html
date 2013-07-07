@@ -1,0 +1,10 @@
+<div>
+	<div class='foodie-float-element' ng-repeat='recipe in recipes'>
+		<a href='#/recipes/{{recipe.Id}}'>
+			<span>{{recipe.Title}}</span>
+			<div class='foodie-float-icon'>
+				<img ng-src='{{recipe.IconLocation}}'>
+			</div>
+		</a>
+	</div>
+</div>

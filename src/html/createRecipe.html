@@ -1,0 +1,46 @@
+<form class='modal-form' title='Create Recipe' ng-controller='CreateRecipeCtrl'>
+	<div>Title</div>
+	<div><input ng-model="title" type="text" name="title" class="text ui-widget-content ui-corner-all"></div>
+	<div>Author</div>
+	<div><input ng-model="author" type="text" name="author" class="text ui-widget-content ui-corner-all"></div>
+	<div>
+		Ingredients
+	</div>
+	<div ng-repeat="ingredient in ingredients">
+		<input
+			type="text"
+			name="ingredient"
+			class="text foodie-ingredient ui-widget-content ui-corner-all"
+			value="{{ingredient.name}}"
+			ng-model="ingredient.name" />
+		<div class="foodie-quantity-group">
+			<label for="quantity">How much?</label>
+			<input
+				type="text"
+				name="quantity"
+				class="foodie-quantity ui-widget-content ui-corner-all"
+				value="{{ingredient.quantity}}"
+				ng-model="ingredient.quantity" />
+			<input
+				type="text"
+				name="unit"
+				class="foodie-unit ui-widget-content ui-corner-all"
+				value="{{ingredient.unit}}"
+				ng-model="ingredient.unit" />
+			<button
+				foodbox-button
+				class="add-more-button foodie_button"
+				ng-click="addIngredient()"
+				ng-show="isLastIngredient(ingredient)">
+					+
+			</button>
+			<button
+				foodbox-button
+				class="add-more-button foodie_button"
+				ng-click="removeIngredient(ingredient)"
+				ng-show="!isLastIngredient(ingredient)">
+					-
+			</button>
+		</div>
+	</div>
+</form>

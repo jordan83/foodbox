@@ -1,0 +1,43 @@
+<div class='foodie-recipe-right'>
+	<div ng-controller="SlideShowCtrl" class='foodbox-slide-show'>
+		<div ng-repeat='img in recipe.ImageUrls'>
+			<div class='foodbox-slide' ng-show="showImage(img)">
+				<img ng-src='{{img}}' width="512" height="512">
+			</div>
+		</div>
+		<div class='foodbox-slide' ng-show="showFileUpload()">
+			<div foodbox-file-drop file-upload-url='recipe.FileUploadUrl' file-upload-finished='postUpload'>
+				<span class='foodie-drop-label'>Drop new image here...</span>
+			</div>
+		</div>
+		<div>{{counterText()}}</div>
+		<button foodbox-button ng-click='previous()'>&lt;</button>
+		<button foodbox-button ng-click='next()'>&gt;</button>
+	</div>
+</div>
+<div class="foodie-recipe-main">
+	<h1>{{ recipe.Title }}</h1>
+	
+	<p>
+		Author: {{ recipe.Author }}
+		<br>
+		Cookbook: {{ recipe.Cookbook }}
+	</p>
+	
+	<div class='foodie-ingredients'>
+		<h2>Ingredients</h2>
+		<ul class='foodie-recipe-items'>
+				<li ng-repeat='ingredient in recipe.Ingredients'>
+					{{ ingredient.Name }} {{ ingredient.Quantity }} {{ ingredient.Unit }}
+				</li>
+		</ul>
+	</div>
+	
+	<div class='foodie-recipe-method'>
+		<h2>Method</h2>
+	</div>
+	<div class='foodie-recipe-buttons'>
+		<button foodbox-button class='foodie_post_button' ng-click="remove()">Delete</button>
+		<button foodbox-button class='foodie_post_button'>Edit</button>
+	</div>
+</div>
