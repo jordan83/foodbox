@@ -65,7 +65,17 @@ app.controller('CreateRecipeCtrl', function($scope, Dialog, Recipe) {
 
 app.controller('RecipesCtrl', function($scope, Recipe) {
 	
+	var placeholderUrl = "/images/placeholder_rev.png";
+	
 	$scope.recipes = Recipe.query();
+	
+	
+	$scope.getImageUrl = function(recipe) {
+		if (recipe.ImageUrls.length > 0) {
+			return recipe.ImageUrls[0];
+		}
+		return placeholderUrl;
+	}
 });
 
 app.controller('RecipeCtrl', function($scope, $routeParams, Recipe) {

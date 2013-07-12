@@ -3,7 +3,7 @@
 		<a href='#/recipes/{{recipe.Id}}'>
 			<span>{{recipe.Title}}</span>
 			<div class='foodie-float-icon'>
-				<img ng-src='{{recipe.IconLocation}}'>
+				<img ng-src='{{ getImageUrl(recipe) }}'>
 			</div>
 		</a>
 	</div>
