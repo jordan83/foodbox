@@ -14,13 +14,15 @@ app.controller('NavCtrl', function($scope, $http, Dialog) {
 	};
 });
 
-app.controller('CreateRecipeCtrl', function($scope, Dialog, Recipe) {
+app.controller('CreateRecipeCtrl', function($scope, Dialog, Recipe, $route) {
 	
 	function submit() {
 		Recipe.create({
 			title: $scope.title,
 			author: $scope.author,
 			ingredients: $scope.ingredients
+		}, function() {
+			$route.reload();
 		});
 		Dialog.close();
 	}
@@ -76,16 +78,22 @@ app.controller('RecipesCtrl', function($scope, Recipe) {
 		}
 		return placeholderUrl;
 	}
+	
+	$scope.$on("RecipeAdded", function() {
+		$scope.recipes = Recipe.query();
+	});
 });
 
-app.controller('RecipeCtrl', function($scope, $routeParams, Recipe) {
+app.controller('RecipeCtrl', function($scope, $routeParams, Recipe, $location) {
 	
 	$scope.recipe = Recipe.get({recipeId:$routeParams.recipeId}, function() {
 		$scope.imageUrls = $scope.recipe.ImageUrls;
 	});
 	
 	$scope.remove = function() {
-		Recipe.remove({recipeId:$routeParams.recipeId})
+		Recipe.remove({recipeId:$routeParams.recipeId}, function() {
+			$location.path("/recipes");
+		});
 	}
 });
 
