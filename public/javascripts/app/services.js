@@ -12,7 +12,15 @@ dialog.factory('Dialog', function($http, $compile) {
 		
 		_dialog: undefined,
 		
+		_args: undefined,
+		
+		_scope: undefined,
+		
 		create: function(scope, args) {
+			
+			_args = args;
+			_scope = scope;
+			
 			// Fetch the template url and add it to the body.
 			var self = this;
 			$http.get(args.templateUrl).success(function(data) {
@@ -40,6 +48,8 @@ dialog.factory('Dialog', function($http, $compile) {
 		close: function() {
 			this._dialog.dialog("close");
 			$('.modal-form').remove();
+			
+			this.create(_scope, _args);
 		},
 		
 		setButtons: function(buttons) {

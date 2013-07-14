@@ -32,7 +32,7 @@ app.controller('CreateRecipeCtrl', function($scope, Dialog, Recipe, $route) {
 	}
 	
 	$scope.$watch("createdRecipe", function(recipe) {
-		if (recipe.Id != undefined) {
+		if (recipe != undefined && recipe.Id != undefined) {
 			$scope.$emit("RecipeCreated", recipe);
 		}
 	});
@@ -119,6 +119,10 @@ app.controller('RecipeCtrl', function($scope, $routeParams, Recipe, $location) {
 			$location.path("/recipes").search('removedId=' + $routeParams.recipeId);
 		});
 	}
+	
+	$scope.$on("RecipeAdded", function(event, recipe) {
+		$location.path("/recipes");
+	});
 });
 
 app.controller("SlideShowCtrl", function($scope) {
