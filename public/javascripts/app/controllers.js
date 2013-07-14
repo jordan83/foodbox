@@ -13,8 +13,8 @@ app.controller('NavCtrl', function($scope, $http, Dialog) {
 		Dialog.open();
 	};
 	
-	$scope.$on("RecipeCreated", function() {
-		$scope.$broadcast("RecipeAdded");
+	$scope.$on("RecipeCreated", function(event, recipe) {
+		$scope.$broadcast("RecipeAdded", recipe);
 	});
 });
 
@@ -25,11 +25,17 @@ app.controller('CreateRecipeCtrl', function($scope, Dialog, Recipe, $route) {
 			title: $scope.title,
 			author: $scope.author,
 			ingredients: $scope.ingredients
-		}, function() {
-			$scope.$emit("RecipeCreated");
+		}, function(recipe) {
+			$scope.createdRecipe = recipe;
 		});
 		Dialog.close();
 	}
+	
+	$scope.$watch("createdRecipe", function(recipe) {
+		if (recipe.Id != undefined) {
+			$scope.$emit("RecipeCreated", recipe);
+		}
+	});
 	
 	Dialog.setButtons({
 		Save: submit
@@ -73,14 +79,21 @@ app.controller('RecipesCtrl', function($scope, Recipe, $routeParams) {
 	
 	var placeholderUrl = "/images/placeholder_rev.png";
 	
-	$scope.recipes = Recipe.query(function() {
-		for(var i = 0; i < $scope.recipes.length; i++) {
+	function removeRecipeFromList(removedId) {
+		for (var i = 0; i < $scope.recipes.length; i++) {
 			var recipe = $scope.recipes[i];
-			if(recipe.Id == $routeParams.removedId) {
+			if(recipe.Id == removedId) {
 				$scope.recipes.splice(i, 1);
 				break;
 			}
 		}
+	}
+	
+	$scope.recipes = Recipe.query(function() {
+		if ($routeParams["removedId"] == undefined) {
+			return;
+		}
+		removeRecipeFromList($routeParams.removedId)
 	});
 	
 	$scope.getImageUrl = function(recipe) {
@@ -90,8 +103,8 @@ app.controller('RecipesCtrl', function($scope, Recipe, $routeParams) {
 		return placeholderUrl;
 	}
 	
-	$scope.$on("RecipeAdded", function() {
-		$scope.recipes = Recipe.query();
+	$scope.$on("RecipeAdded", function(event, recipe) {
+		$scope.recipes.push(recipe);
 	});
 });
 

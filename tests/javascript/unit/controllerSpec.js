@@ -50,7 +50,7 @@ describe('Foodbox controllers', function() {
 		
 		var scope, ctrl, $httpBackend;
 		
-		beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
+		beforeEach(inject(function(_$httpBackend_, $rootScope, $routeParams, $controller) {
 			$httpBackend = _$httpBackend_;
 			$httpBackend.expectGET('recipes').respond(recipeData());
 			

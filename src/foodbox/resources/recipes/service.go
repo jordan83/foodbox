@@ -70,7 +70,7 @@ type Service interface {
 	
 	fetchRecipes() []RecipeModel
 	
-	add(recipe *Recipe) error
+	add(recipe *Recipe) (r RecipeModel, err error)
 	
 	removeRecipe(recipeId string)
 	
@@ -87,8 +87,10 @@ func (service *RepoWrapper) fetchRecipes() []RecipeModel {
 	return service.transformToRecipeModels(recipes)
 }
 
-func (service *RepoWrapper) add(recipe *Recipe) error {
-	return service.repository.add(recipe)
+func (service *RepoWrapper) add(recipe *Recipe) (r RecipeModel, err error) {
+	key, err := service.repository.add(recipe)
+	r = service.newRecipeModel(key, *recipe)
+	return;
 }
 
 func (service *RepoWrapper) removeRecipe(recipeId string) {

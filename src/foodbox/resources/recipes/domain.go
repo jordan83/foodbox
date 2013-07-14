@@ -41,8 +41,9 @@ func newRepositoryFromContext(c appengine.Context) *Repository {
 	return newRepository(queryEngine)
 }
 
-func (repository *Repository) add(recipe *Recipe) error {
-	return repository.queryEngine.NewEntity(RecipeType, recipe)
+func (repository *Repository) add(recipe *Recipe) (key string, err error) {
+	key, err = repository.queryEngine.NewEntity(RecipeType, recipe)
+	return;
 }
 
 func (repository *Repository) save(key string, recipe *Recipe) error {

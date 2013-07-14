@@ -20,10 +20,12 @@ func createRecipeHandler(w http.ResponseWriter, r *http.Request) {
 	
 	c := appengine.NewContext(r)
 	service := newService(c)
-	err := service.add(&recipe)
+	recipeModel, err := service.add(&recipe)
 	
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
         return
     }
+    
+    response.WriteJson(w, recipeModel)
 }

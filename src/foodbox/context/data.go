@@ -11,7 +11,7 @@ import (
 
 type QueryEngine interface {
 	NewQuery(entityType string) RecordIterator
-	NewEntity(entityType string, entity interface{}) error
+	NewEntity(entityType string, entity interface{}) (key string, err error)
 	SaveEntity(entityType string, entityKey string, entity interface{}) error
 	DeleteEntity(key string)
 	GetEntity(key string, entity interface{})
@@ -34,12 +34,14 @@ func (engine *DatastoreQueryEngine) NewQuery(entityType string) RecordIterator {
 	}
 }
 
-func (engine *DatastoreQueryEngine) NewEntity(entityType string, entity interface{}) error {
-	_, err := datastore.Put(
+func (engine *DatastoreQueryEngine) NewEntity(entityType string, entity interface{}) (key string, err error) {
+	appengineKey, err := datastore.Put(
 		engine.context,
 		datastore.NewIncompleteKey(engine.context, entityType, nil),
 		entity)
-	return err
+		
+	key = appengineKey.Encode();
+	return
 }
 
 func (engine *DatastoreQueryEngine) SaveEntity(entityType string, entityKey string, entity interface{}) error {
