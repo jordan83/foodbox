@@ -121,7 +121,7 @@ app.controller('RecipeCtrl', function($scope, $routeParams, Recipe, $location) {
 	}
 	
 	$scope.$on("RecipeAdded", function(event, recipe) {
-		$location.path("/recipes");
+		$location.path("/recipes/" + recipe.Id);
 	});
 });
 
