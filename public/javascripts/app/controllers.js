@@ -171,3 +171,18 @@ app.controller("SlideShowCtrl", function($scope) {
 	});
 	
 });
+
+app.controller("BulkUploadCtrl", function($scope, $http) {
+	
+	function getUploadUrl() {
+		$http.get('/upload/init').success(function(data) {
+		    $scope.url = data;
+		});
+	}
+	
+	$scope.postUpload = function(data) {
+		getUploadUrl();
+	}
+	
+	getUploadUrl();
+});

@@ -12,9 +12,9 @@ func getRecipeHandler(w http.ResponseWriter, r *http.Request) {
 	recipeId := getRecipeId(r)
 	
 	c := appengine.NewContext(r)
-	service := newService(c)
+	service := NewService(c)
 
-	recipe := service.fetchRecipe(recipeId)
+	recipe := service.FetchRecipe(recipeId)
 	response.WriteJson(w, recipe)
 }
 
@@ -22,9 +22,9 @@ func deleteRecipeHandler(w http.ResponseWriter, r *http.Request) {
 	recipeId := getRecipeId(r)
 	
 	c := appengine.NewContext(r)
-	service := newService(c)
+	service := NewService(c)
 	
-	service.removeRecipe(recipeId)
+	service.RemoveRecipe(recipeId)
 }
 
 type Image struct {
@@ -36,20 +36,20 @@ func serveImageHandler(w http.ResponseWriter, r *http.Request) {
 	blobKey := vars["id"]
 	
 	c := appengine.NewContext(r)
-	imageStore := context.NewImageStore(c)
-	imageStore.WriteImage(w, blobKey)
+	fileStore := context.NewFileStore(c)
+	fileStore.WriteFile(w, blobKey)
 }
 
 func addImageHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	
-	imageStore := context.NewImageStore(c)
-	_, imageKey := imageStore.GetUploadedImageKey(r, "file")
+	fileStore := context.NewFileStore(c)
+	_, imageKey := fileStore.GetUploadedFileKey(r, "file")
 	
-	service := newService(c)
+	service := NewService(c)
 	
 	recipeId := getRecipeId(r)
-	service.addImageToRecipe(recipeId, imageKey)
+	service.AddImageToRecipe(recipeId, imageKey)
 	
 	img := Image { serveImageRoute(imageKey) }
 	response.WriteJson(w, img)

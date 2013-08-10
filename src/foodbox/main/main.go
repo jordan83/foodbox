@@ -4,6 +4,7 @@ import (
     "net/http"
     "foodbox/response"
     "foodbox/resources/recipes"
+    "foodbox/resources/bulk"
     "foodbox/context"
     "github.com/gorilla/mux"
 )
@@ -20,9 +21,11 @@ func init() {
     r.HandleFunc("/partial/recipes", recipesHandler)
     r.HandleFunc("/partial/recipe", recipeHandler)
     r.HandleFunc("/partial/createRecipe", createRecipesHandler)
+    r.HandleFunc("/partial/bulk", bulkCreateRecipesHandler)
     r.HandleFunc("/nav", navHandler)
     
     recipes.InitRoutes(r)
+    bulk.InitRoutes(r)
     
     http.Handle("/", r)
 }
@@ -63,4 +66,8 @@ func navHandler(w http.ResponseWriter, r *http.Request) {
 
 func createRecipesHandler(w http.ResponseWriter, r *http.Request) {
 	response.RenderHtml("createRecipe.html", w)
+}
+
+func bulkCreateRecipesHandler(w http.ResponseWriter, r *http.Request) {
+	response.RenderHtml("bulk.html", w)
 }

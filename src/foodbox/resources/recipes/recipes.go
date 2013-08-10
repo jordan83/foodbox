@@ -8,9 +8,9 @@ import (
 
 func getRecipesHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
-    service := newService(c)
+    service := NewService(c)
 
-    recipes := service.fetchRecipes()    
+    recipes := service.FetchRecipes()    
 	response.WriteJson(w, recipes)
 }
 
@@ -19,8 +19,8 @@ func createRecipeHandler(w http.ResponseWriter, r *http.Request) {
 	response.DecodeJson(r.Body, &recipe)
 	
 	c := appengine.NewContext(r)
-	service := newService(c)
-	recipeModel, err := service.add(&recipe)
+	service := NewService(c)
+	recipeModel, err := service.Add(&recipe)
 	
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)

@@ -2,6 +2,8 @@
 body {
 	font-family: 'Josefin Sans', Verdana, Helvetica, sans-serif;
 	font-size: small;
+	width:auto;
+	min-width:1000px;
 }
 
 html, body {
@@ -20,14 +22,30 @@ h2 {
 	font-size: 1.5em;
 }
 
+#header {
+	height:60px;
+	padding-left:40px;
+	padding-right:40px;
+	background-color:#685642;
+}
+
+#header a, #header li, #header #logo-foodbox {
+	color:white;
+}
+
 #logo-foodbox {
 	font-size: 3.5em;
 	float:left;
 }
 
-#user {
-	list-style-type:none;
+#actions {
+	overflow:hidden;
+}
+
+.header-right {
 	float:right;
+	padding-top:20px;
+	padding-left:5px;
 }
 
 #all-container {
@@ -36,52 +54,19 @@ h2 {
 	position:relative;
 }
 
-#header {
-	height:60px;
-	padding-left:20px;
-	padding-right:20px;
-	background-color:#685642;
-}
-
-#header a, #header li, #header #logo-foodbox {
-	color:white;
-}
-
 #content {
 	overflow:auto;
 	height:100%;
 	min-height:100%;
 	background-color:#E6DCD8;
 	padding-bottom:70px;
-}
-
-#nav {
-	float:left;
-	width:200px;
-	height:100%;
-}
-
-#main-separator {
-	position:absolute;
-	width:3px;
-	top:60px;
-	bottom:0px;
-	left:200px;
-	background-color:#685642;
+	padding-left:50px;
+	padding-right:50px;
 }
 
 #main {
 	padding-bottom:60px;
-	padding-left:210px;
 }
-
-/*#footer {
-	position: relative;
-	margin-top: -60px;
-	height: 60px;
-	background-color:#685642;
-	clear:both;
-}*/
 
 #signin-links {
 	text-align: center;
@@ -118,16 +103,16 @@ h2 {
 }
 
 .foodie-recipe-main {
-	margin-left:30px;
+	margin-left:250px;
 }
 
 .foodie-recipe-right {
-	float:right;
-	margin-right:50px;
+	float:left;
+	width:220px;
 }
 
 .foodie-recipe-buttons button {
-	float:left;
+	float:right;
 }
 
 .foodie-recipe-items {
@@ -142,7 +127,6 @@ h2 {
 }
 
 .foodie-recipe-main h1, .foodie-ingredients h2, .foodie-recipe-method h2 {
-	margin-right:572px;
 	-moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
@@ -165,7 +149,7 @@ h2 {
     border-radius: 5px;
 	margin:5px;
 	padding:5px;
-	height:490px;
+	height:197px;
 }
 
 .foodie-drop-label {
@@ -179,8 +163,8 @@ h2 {
 }
 
 .foodbox-slide {
-	height:512px;
-	width:512px;
+	height:220px;
+	width:220x;
 	border-style:solid;
 	border-width:thin;
 	border-color:grey;
@@ -251,6 +235,12 @@ img.foodie-ajax-busy {
 	width: 180px;
 	height: 160px;
 	margin: 10px;
+}
+
+.bulk-upload-file {
+	width: 200px;
+	height: 100px;
+	border: dotted;
 }
 
 input.text {

@@ -10,7 +10,7 @@ import (
 //----------------------------------------------------------------------
 
 type RepoWrapper struct {
-	imageStore context.ImageStore
+	fileStore context.FileStore
 	repository *Repository
 }
 
@@ -25,9 +25,9 @@ type RecipeModel struct {
 
 type ImageUrl string
 
-func newService(c appengine.Context) Service {
+func NewService(c appengine.Context) Service {
 	return &RepoWrapper {
-		context.NewImageStore(c),
+		context.NewFileStore(c),
 		newRepositoryFromContext(c),
 	}
 }
@@ -38,7 +38,7 @@ func (service *RepoWrapper) newRecipeModel(key string, recipe Recipe) RecipeMode
 		Title: recipe.Title,
 		Author: recipe.Author,
 		Ingredients: recipe.Ingredients,
-		FileUploadUrl: service.imageStore.CreateUploadUrl(addFileRoute(key)),
+		FileUploadUrl: service.fileStore.CreateUploadUrl(addFileRoute(key)),
 		ImageUrls: transformToUrls(recipe.ImageKeys),
 	}
 }
@@ -66,41 +66,41 @@ func transformToUrls(keys []string) []ImageUrl {
 
 type Service interface {
 	
-	fetchRecipe(recipeId string) RecipeModel
+	FetchRecipe(recipeId string) RecipeModel
 	
-	fetchRecipes() []RecipeModel
+	FetchRecipes() []RecipeModel
 	
-	add(recipe *Recipe) (r RecipeModel, err error)
+	Add(recipe *Recipe) (r RecipeModel, err error)
 	
-	removeRecipe(recipeId string)
+	RemoveRecipe(recipeId string)
 	
-	addImageToRecipe(recipeId string, imageKey string)
+	AddImageToRecipe(recipeId string, imageKey string)
 }
 
-func (service *RepoWrapper) fetchRecipe(recipeId string) RecipeModel {
+func (service *RepoWrapper) FetchRecipe(recipeId string) RecipeModel {
 	recipe := service.repository.fetchRecipe(recipeId)
 	return service.newRecipeModel(recipe.Id, recipe.Recipe)
 }
 
-func (service *RepoWrapper) fetchRecipes() []RecipeModel {
+func (service *RepoWrapper) FetchRecipes() []RecipeModel {
 	recipes := service.repository.fetchRecipes()
 	return service.transformToRecipeModels(recipes)
 }
 
-func (service *RepoWrapper) add(recipe *Recipe) (r RecipeModel, err error) {
+func (service *RepoWrapper) Add(recipe *Recipe) (r RecipeModel, err error) {
 	key, err := service.repository.add(recipe)
 	r = service.newRecipeModel(key, *recipe)
 	return;
 }
 
-func (service *RepoWrapper) removeRecipe(recipeId string) {
+func (service *RepoWrapper) RemoveRecipe(recipeId string) {
 	imageKeys := service.repository.fetchRecipe(recipeId).Recipe.ImageKeys
-	service.imageStore.RemoveImages(imageKeys)
+	service.fileStore.RemoveFiles(imageKeys)
 	
 	service.repository.removeRecipe(recipeId)
 }
 
-func (service *RepoWrapper) addImageToRecipe(recipeId string, imageKey string) {
+func (service *RepoWrapper) AddImageToRecipe(recipeId string, imageKey string) {
 	keyedRecipe := service.repository.fetchRecipe(recipeId)
 	
 	keyedRecipe.Recipe.ImageKeys = append(keyedRecipe.Recipe.ImageKeys, imageKey)
